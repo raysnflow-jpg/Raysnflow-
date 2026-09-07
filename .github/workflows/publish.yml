@@ -36,8 +36,20 @@ jobs:
         run: |
           python -m pip install --upgrade build twine
           python -m build
+
       - name: Publish to PyPI
         env:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
-        run: python -m twine upload dist/* -u "$TWINE_USERNAME" -p "$TWINE_PASSWORD"
+        run: |
+          python -m pip install --upgrade twine
+          python -m twine upload dist/* -u "$TWINE_USERNAME" -p "$TWINE_PASSWORD"
+
+      - name: Publish to GitHub Packages
+        env:
+          TWINE_USERNAME: ${{ github.actor }}
+          TWINE_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Upload to the GitHub Packages Python registry for this repository owner
+          python -m pip install --upgrade twine
+          python -m twine upload --repository-url https://pypi.pkg.github.com/${{ github.repository_owner }} dist/* -u "$TWINE_USERNAME" -p "$TWINE_PASSWORD"
