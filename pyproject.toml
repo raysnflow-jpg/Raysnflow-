@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel", "build"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "juniper"
+version = "0.1.0"
+description = "Terminal centering utilities"
+readme = "README.md"
+license = { text = "MIT" }
+authors = [
+  { name = "raysnflow-jpg", email = "raysnflow@example.com" }
+]
+requires-python = ">=3.8"
+dependencies = []
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["terminal_center*"]
